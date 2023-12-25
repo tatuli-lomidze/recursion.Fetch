@@ -1,28 +1,27 @@
 // recursion
 
 function expo(a, b, cb) {
-    if (b === 0) return 1
-    return a * expo(a, b - 1, cb)
+  if (b === 0) return 1;
+  return a * expo(a, b - 1, cb);
 }
 
-const resultExpo = expo(5, 3, (a) => a   )
+const resultExpo = expo(5, 3, (a) => a);
 console.log(resultExpo);
-
 
 // Fetch
 
 function postCard(data) {
     const postElement = document.createElement('div')
     postElement.classList.add('post')
-    
+
     const titleElement = document.createElement('h2')
     titleElement.textContent = data.title
     const bodyElement = document.createElement('p')
     bodyElement.textContent = data.body
-    
+
     postElement.appendChild(titleElement)
     postElement.appendChild(bodyElement)
-    
+
     return postElement
 }
 
@@ -33,7 +32,7 @@ async function fetchData() {
             throw Error('not a good request')
         }
         const data = await rawData.json()
-        
+
         data.forEach((postData) => {
             const post = postCard(postData)
             document.body.append(post)
@@ -45,37 +44,64 @@ async function fetchData() {
 
 fetchData()
 
-
 // deep copy - async
 
-// დაწერე ასინქრონული ფუნქცია, რომელიც
-// არგუმენტად იღებს ობიექტს და აკეთებს
-// deep copy-ს
-// ● ფუნქციამ უნდა გამოიძახოს reject თუ
-// არგუმენტი არ არის ობიექტი. თუ ყველაფერი
-// კარგად არის, გამოიძახოს resolve
-// კოპირებული ობიექტით
 
-
- 
-user2 = {
+const user2 = {
   name: "davit",
   age: {
-    adult: "28"
-  }
+    adult: "28",
+  },
 };
 
-const deepCopy = (user2) => {
+const deepCopy = (user) => {
+  return new Promise((resolve, reject) => {
+    if (typeof user === "object") {
+      resolve({ ...user, age: { ...user.age, adult: "28" } });
+    } else {
+      reject("user is not an OBJECT");
+    }
+  });
+};
 
-    new Promise((resolve, reject) => {
-        
-    })
+deepCopy(user2)
+  .then((result) => console.log(result))
+  .catch((error) => console.log(error));
 
-   
-}
+//   check
+user2.age.adult = 40;
 
-
-user2.age.adult = 40
 console.log(user2);
-const resultCopy = deepCopy(user2)
-console.log(resultCopy);
+
+// async await
+
+// const user2 = {
+//   name: "davit",
+//   age: {
+//     adult: "28",
+//   },
+// };
+
+// const deepCopy = async (user) => {
+//   return new Promise((resolve, reject) => {
+//     if (typeof user === "object") {
+//       resolve({ ...user, age: { ...user.age, adult: "28" } });
+//     } else {
+//       reject("user is not an OBJECT");
+//     }
+//   });
+// };
+// async function copyUser() {
+//   try {
+//     const result = await deepCopy(user2);
+//     console.log(result);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+
+// copyUser();
+
+// user2.age.adult = 40;
+
+// console.log(user2);
